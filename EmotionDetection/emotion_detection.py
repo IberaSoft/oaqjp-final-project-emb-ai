@@ -25,6 +25,18 @@ def emotion_detector(text_to_analyze):
     
     response = requests.post(url, json=input_json, headers=headers)
     
+    # Check status code for error handling
+    # If status_code is 400 (bad request, e.g., blank entry), return None values
+    if response.status_code == 400:
+        return {
+            'anger': None,
+            'disgust': None,
+            'fear': None,
+            'joy': None,
+            'sadness': None,
+            'dominant_emotion': None
+        }
+    
     # Convert response to dictionary
     response_dict = response.json()
     
